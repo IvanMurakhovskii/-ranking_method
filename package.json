@@ -2,7 +2,7 @@
   "homepage": "https://ivanmurakhovskii.github.io/-ranking_method/",
   "name": "ranking-method",
   "version": "0.1.0",
-  "private": true,
+  "main": "index.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
