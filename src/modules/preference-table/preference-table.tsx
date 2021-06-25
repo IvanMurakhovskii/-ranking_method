@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BoardType, Coordinate } from '../../types';
-import { InputNumber, Row, Col, Typography, Input, Button } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { InputNumber, Row, Col, Typography, Input, Button, Card } from 'antd';
+import { withRouter, Link } from 'react-router-dom';
 
 type State = {
   board: BoardType;
@@ -56,38 +56,55 @@ class PreferenceTable extends Component<any, State> {
 
   render() {
 
-    return (
-      <div>
-        <Row gutter={[8, 8]} justify="center">
-          <Col>
-            <Typography.Text>Наименование</Typography.Text>
-            {this.state.names.map(name => (
-              <Row>
-                <Col>
-                  <Input value={name} disabled />
-                </Col>
-              </Row>
-            ))}
-          </Col>
-          <Col>
-            <Typography.Text>Предпочтения</Typography.Text>
-            {this.state.board.map((row, i) =>
-              <Row>
-                <Col key={i}>{row.map((preference, j) =>
-                  <InputNumber key={j} value={preference}
-                    onChange={(value: number) => { this.updateBoard({ x: i, y: j }, value); }} />
-                )}
-                </Col>
-              </Row>)}
-          </Col>
-        </Row>
-        <Row justify="center" gutter={[8, 8]} style={{ marginTop: "1rem" }}>
-          <Col>
-            <Button onClick={this.onButtonClick} type="primary">Рассчитать ранг</Button>
-          </Col>
-        </Row>
+    const extras = <div>
+      <Link to="/">Ввод данных</Link>
+    </div>
 
-      </div>
+    return (
+      <Row justify="center" >
+        <Col span={15}>
+          <Card title="Рейтинг" bordered={true} extra={extras}>
+            <Row gutter={[8, 8]} justify="center">
+              <Col span={6}>
+                <Row justify="center">
+                  <Col>
+                    <Typography.Text strong>Наименование</Typography.Text>
+                  </Col>
+                </Row>
+                {this.state.names.map((name, i) => (
+                  <Row justify='center' className="custom-block">
+                    <Col>
+                      <Typography.Text strong key={i}>{name}</Typography.Text>
+                      {/* <Input key={i} value={name} disabled /> */}
+                    </Col>
+                  </Row>
+                ))}
+              </Col>
+              <Col>
+                <Row justify="center">
+                  <Col>
+                    <Typography.Text strong>Предпочтения</Typography.Text>
+                  </Col>
+                </Row>
+                {this.state.board.map((row, i) =>
+                  <Row>
+                    <Col key={i}>{row.map((preference, j) =>
+                      <InputNumber key={j} value={preference}
+                        onChange={(value: number) => { this.updateBoard({ x: i, y: j }, value); }} />
+                    )}
+                    </Col>
+                  </Row>)}
+              </Col>
+            </Row>
+            <Row justify="center" gutter={[8, 8]} style={{ marginTop: "1rem" }}>
+              <Col>
+                <Button onClick={this.onButtonClick} type="primary">Рассчитать ранг</Button>
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+
+      </Row >
     );
   };
 }

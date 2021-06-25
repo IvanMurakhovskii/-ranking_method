@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { BoardType, Coordinate } from '../../types';
-import { InputNumber, List, Input, Typography, Row, Col } from 'antd';
+import { BoardType } from '../../types';
+import { Card, Typography, Row, Col } from 'antd';
+import { Link } from 'react-router-dom';
+import { Button } from 'antd/lib/radio';
 
 type Props = {
     board: BoardType,
@@ -57,51 +59,78 @@ export default class Ranking extends Component<{}, State> {
     }
 
     render() {
+
+        const extras = <div>
+            <Link to="/preference" style={{ margin: "1rem" }}>Рейтинг</Link>
+            <Link to="/">Ввод данных</Link>
+        </div>
         return (
-            <div>
-                <Row gutter={[8, 8]} justify="center">
-                    <Col>
-                        <Typography.Text>Наименование</Typography.Text>
-                        {this.state.names.map(name => (
-                            <Row>
-                                <Col>
-                                    <Input value={name} disabled />
-                                </Col>
-                            </Row>
-                        ))}
-                    </Col>
-                    <Col>
-                        <Typography.Text>Вектор предпочтений</Typography.Text>
-                        {this.state.board.map((row, i) =>
-                            <Row>
-                                <Col key={i}>{row.map((preference, j) =>
-                                    <InputNumber key={j} value={preference} disabled />
-                                )}
-                                </Col>
-                            </Row>)}
-                    </Col>
-                    <Col>
-                        <Typography.Text>Сумма компонент</Typography.Text>
-                        {this.state.componentSum.map(name => (
-                            <Row>
-                                <Col>
-                                    <Input value={name} disabled />
-                                </Col>
-                            </Row>
-                        ))}
-                    </Col>
-                    <Col>
-                        <Typography.Text>Ранг</Typography.Text>
-                        {this.state.ranks.map(rank => (
-                            <Row>
-                                <Col>
-                                    <Input value={rank} disabled />
-                                </Col>
-                            </Row>
-                        ))}
-                    </Col>
-                </Row>
-            </div>
+            <Row justify="center" >
+                <Col span={14}>
+                    <Card title="Ранг" bordered={true} extra={extras}>
+                        <Row gutter={[10, 8]} justify="center">
+                            <Col>
+                                <Row justify="center">
+                                    <Col>
+                                        <Typography.Text strong>Наименование</Typography.Text>
+                                    </Col>
+                                </Row>
+                                {this.state.names.map((name, i) => (
+                                    <Row justify='center' className="custom-block">
+                                        <Col>
+                                            <Typography.Text strong key={i}>{name}</Typography.Text>
+                                        </Col>
+                                    </Row>
+                                ))}
+                            </Col>
+                            <Col>
+                                <Row justify='center'>
+                                    <Col>
+                                        <Typography.Text strong >Вектор предпочтений</Typography.Text>
+                                    </Col>
+                                </Row>
+                                {this.state.board.map((row, i) =>
+                                    <Row justify="center">
+                                        {row.map((preference, j) =>
+                                            <Col key={i}>
+                                                <Typography.Text className="custom-block" strong key={j}>{preference}</Typography.Text>
+                                            </Col>
+                                        )}
+
+                                    </Row>)}
+                            </Col>
+                            <Col>
+                                <Row justify='center'>
+                                    <Col>
+                                        <Typography.Text strong >Сумма компонент</Typography.Text>
+                                    </Col>
+                                </Row>
+                                {this.state.componentSum.map((name, i) => (
+                                    <Row className="custom-block" justify="center">
+                                        <Col>
+                                            <Typography.Text strong key={i}>{name}</Typography.Text>
+                                        </Col>
+                                    </Row>
+                                ))}
+                            </Col>
+                            <Col>
+                                <Row justify='center'>
+                                    <Col>
+                                        <Typography.Text strong >Ранг</Typography.Text>
+                                    </Col>
+                                </Row>
+                                {this.state.ranks.map((rank, i) => (
+                                    <Row className="custom-block" justify="center">
+                                        <Col>
+                                            <Typography.Text strong key={i}>{rank}</Typography.Text>
+                                        </Col>
+                                    </Row>
+                                ))}
+                            </Col>
+                        </Row>
+                    </Card>
+                </Col>
+            </Row>
         );
     };
 }
